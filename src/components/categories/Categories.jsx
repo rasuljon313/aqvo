@@ -14,8 +14,8 @@ const Categories = () => {
   return (
    <>
     <Sidebar/>
-    
-    <div>Ombor</div>
+
+    <div>omborho</div>
    </>
   )
 }

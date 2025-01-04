@@ -19,12 +19,17 @@ const Header = () => {
 
   return (
     <>
-    <Sidebar/>
-      <div className="container">Header Content</div>
-      <button onClick={setOpen}>Toggle Modal</button> 
-      {
+    <header>
+        <div className="header_header">
+        <Sidebar/>
+        <div className="header_box">
+        <button onClick={setOpen}>Toggle Modal</button> 
+        {
         open && <Modal /> 
-      }
+       }
+        </div>
+        </div>
+    </header>
     </>
   );
 };
