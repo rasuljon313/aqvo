@@ -4,7 +4,7 @@ import HeaderP from '../pages/Header';
 import Categoriess from '../pages/Categoriess';
 import Employ from '../pages/Employ';
 import Product from '../pages/Product';
-import Shop from '../pages/shop';
+import MarketP from '../pages/MarketP';
 
 
 const App = () => {
@@ -14,7 +14,7 @@ const App = () => {
         <Route path="/" element={<Login/>} />
         <Route path="/home" element={<HeaderP />} />
         <Route path="/categories" element={<Categoriess />} />
-        <Route path="/shops" element={<Shop />} />
+        <Route path="/shops" element={<MarketP/>} />
         <Route path="/employees" element={<Employ />} />
         <Route path="/ready-product" element={<Product />} /> 
       </Routes>
