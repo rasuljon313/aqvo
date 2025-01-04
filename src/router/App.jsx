@@ -2,9 +2,9 @@ import { Route, Routes } from 'react-router-dom';
 import Login from '../pages/Login';
 import HeaderP from '../pages/Header';
 import Categoriess from '../pages/Categoriess';
-import Shop from '../pages/shop';
 import Employ from '../pages/Employ';
 import Product from '../pages/Product';
+import Shop from '../pages/shop';
 
 
 const App = () => {
