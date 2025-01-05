@@ -1,14 +1,13 @@
 .sidebar{
     width: 20%;
     position: relative;
-    background: #1c1c1c;
     &_box{
 z-index: 999;
 position: fixed;
     }
     &_item{
         padding: 10px;
-        color: #fff;
+        color: #000;
         font-size: 26px;
         display: flex;
         align-items: center;
@@ -17,16 +16,16 @@ position: fixed;
         transition: 0.4s;
         &.active{
             transition: 0.4s;
-            background-color: #252525;  /* Faollashgan itemning fon rangi */
-    color: white; 
+            background-color: #252525;  
+    color: red; 
     border-radius: 10px 0 0 10px ;
     a{
-        color: #f7c8cc;
+        color: #000;
     }
         }
 a{
     font-family: Arial;
-    color: #fff;
+    color: #000;
     font-size: 22px;
 }
     }

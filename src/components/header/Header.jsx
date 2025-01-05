@@ -1,35 +1,37 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useStore from "../../zustand"; 
+import useStore from "../../zustand"; // Zustand store fayliga yo'lni to'g'rilang
 import Modal from "./Modal";
 import Sidebar from "../sidebar/SideBar";
 
 const Header = () => {
   const navigate = useNavigate();
-  const { open, setOpen } = useStore();  
+  const { token, refreshToken, setOpen, open } = useStore();
 
   useEffect(() => {
-    const token = localStorage.getItem("token");
     if (!token) {
-      navigate("/");
+      navigate("/"); 
     } else {
-      navigate("/home");
+      navigate("/home")
+      const interval = setInterval(() => {
+        refreshToken(navigate); 
+      }, 120000); 
+
+      return () => clearInterval(interval); 
     }
-  }, [navigate]);
+  }, [token, refreshToken, navigate]);
 
   return (
     <>
-    <header>
+      <header>
         <div className="header_header">
-        <Sidebar/>
-        <div className="header_box">
-        <button onClick={setOpen}>Toggle Modal</button> 
-        {
-        open && <Modal /> 
-       }
+          <Sidebar />
+          <div className="header_box">
+            <button onClick={setOpen}>Toggle Modal</button>
+            {open && <Modal />}
+          </div>
         </div>
-        </div>
-    </header>
+      </header>
     </>
   );
 };
