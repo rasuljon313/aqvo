@@ -1,8 +1,9 @@
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import useStore from "../../zustand"; // Zustand store fayliga yo'lni to'g'rilang
+import useStore from "../../zustand"; 
 import Modal from "./Modal";
 import Sidebar from "../sidebar/SideBar";
+import Nav from "../nav/Nav";
 
 const Header = () => {
   const navigate = useNavigate();
@@ -10,12 +11,14 @@ const Header = () => {
 
   useEffect(() => {
     if (!token) {
-      navigate("/"); 
+      navigate("/");
     } else {
-      navigate("/home")
+      if (window.location.pathname !== "/home") {
+        navigate("/home");
+      }
       const interval = setInterval(() => {
         refreshToken(navigate); 
-      }, 120000); 
+      }, 120000);
 
       return () => clearInterval(interval); 
     }
@@ -27,7 +30,8 @@ const Header = () => {
         <div className="header_header">
           <Sidebar />
           <div className="header_box">
-            <button onClick={setOpen}>Toggle Modawxdgit clwfex</button>
+            <Nav/>
+            <button onClick={setOpen}>Modalni ochish</button>
             {open && <Modal />}
           </div>
         </div>
