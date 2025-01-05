@@ -27,7 +27,7 @@ const Header = () => {
         <div className="header_header">
           <Sidebar />
           <div className="header_box">
-            <button onClick={setOpen}>Toggle Modawxdgit clwfgit </button>
+            <button onClick={setOpen}>Toggle Modawxdgit clwfgit wefxwef</button>
             {open && <Modal />}
           </div>
         </div>
