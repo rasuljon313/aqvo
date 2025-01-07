@@ -49,9 +49,9 @@ const Forin = () => {
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     if (savedToken) {
-      navigate("/home"); // token mavjud bo'lsa, /home sahifasiga yo'naltirish
+      navigate("/home");
     }
-  }, [token, navigate]); // token o'zgarganda yoki komponent birinchi marta render qilinganda ishlaydi
+  }, [token, navigate]); 
 
   return (
     <div>
