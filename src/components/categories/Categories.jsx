@@ -15,7 +15,7 @@ const Categories = () => {
    <>
     <Sidebar/>
 
-    <div>omborho</div>
+    <div>omborho.git </div>
    </>
   )
 }
