@@ -7,45 +7,66 @@ const Forin = () => {
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [successMessage, setSuccessMessage] = useState("");
-  const [token, setToken] = useState(localStorage.getItem("token")); // tokenni kuzatish uchun state
+  const [token, setToken] = useState(localStorage.getItem("token"));
   const navigate = useNavigate();
+
+  // Agar token mavjud bo'lsa, home sahifasiga o'tish
+  useEffect(() => {
+    if (token) {
+      navigate("/home");
+    }
+  }, [token, navigate]);
 
   const login = (e) => {
     e.preventDefault();
+    if (token) return; // Agar token bo'lsa, loginni oldini olish
     setLoading(true);
     setErrorMessage("");
     setSuccessMessage("");
 
+    const payload = {
+      phoneNumber: number,
+      password: password,
+    };
+
+    // Login qilish uchun so'rov yuborish
     fetch("https://aqvo.limsa.uz/api/auth/sign-in", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
       },
-      body: JSON.stringify({
-        phoneNumber: number,
-        password: password,
-      }),
+      body: JSON.stringify(payload),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error(`Serverdan xatolik: ${res.status}`);
+        }
+        return res.json();
+      })
       .then((data) => {
+        console.log("Server javobi:", data);
         const accessToken = data?.data?.tokens?.access_token;
 
+        // Agar token bo'lsa, saqlash va home sahifasiga yo'naltirish
         if (accessToken) {
-          localStorage.setItem("token", accessToken);
-          setToken(accessToken); // tokenni state'ga o'rnatish
-          setSuccessMessage("Login successful!");
+          localStorage.setItem("token", accessToken);  // Tokenni saqlash
+          setToken(accessToken);
+          setSuccessMessage("Kirish muvaffaqiyatli!");
+          navigate("/home"); // Home sahifasiga o'tish
         } else {
-          setErrorMessage(data.message || "Login failed");
+          throw new Error(data.message || "Kirishda xatolik");
         }
       })
       .catch((err) => {
-        setErrorMessage("Error during login: " + err.message);
+        console.error("Login xatosi:", err);
+        setErrorMessage(err.message || "Nimadir noto'g'ri ketdi");
       })
       .finally(() => {
         setLoading(false);
       });
   };
 
+<<<<<<< HEAD
   useEffect(() => {
     const savedToken = localStorage.getItem("token");
     if (savedToken) {
@@ -53,35 +74,35 @@ const Forin = () => {
     }
   }, [token, navigate]); 
 
+=======
+>>>>>>> origin/dev
   return (
     <div>
-      <div className="forin">
+      <div className="auth-app">
         <div className="container">
-          <div className="forin_box">
-            <form className="forin_card" onSubmit={login}>
+          <div className="auth-box">
+            <form className="auth-card" onSubmit={login}>
               <input
-                className="forin_input"
+                className="auth-input"
                 type="tel"
-                placeholder="Phone Number"
+                placeholder="Telefon raqam"
                 required
                 onChange={(e) => setNumber(e.target.value)}
                 value={number}
               />
               <input
-                className="forin_input"
+                className="auth-input"
                 type="password"
-                placeholder="Password"
+                placeholder="Parol"
                 required
                 onChange={(e) => setPassword(e.target.value)}
                 value={password}
               />
-              <button className="forin_btn" type="submit" disabled={loading}>
-                {loading ? "Logging in..." : "Login"}
+              <button className="auth-btn" type="submit" disabled={loading}>
+                {loading ? "Kirib boryapti..." : "Kirish"}
               </button>
               {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-              {successMessage && (
-                <p style={{ color: "green" }}>{successMessage}</p>
-              )}
+              {successMessage && <p style={{ color: "green" }}>{successMessage}</p>}
             </form>
           </div>
         </div>

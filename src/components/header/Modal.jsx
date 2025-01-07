@@ -1,10 +1,13 @@
+import useStore from "../../zustand";
+
 const Modal = () => {
+  const {setOpen} = useStore()
     return (
       <>
       <div className="modal-overlay">
         <div className="modal-container">
           <div className="modal-header">
-            <button className="close-btn" >X</button>
+            <button className="close-btn" onClick={setOpen} >X</button>
           </div>
           <form  className="modal-body">
             <input
