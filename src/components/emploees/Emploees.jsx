@@ -49,6 +49,7 @@ const Employees = () => {
       const response = await axios.post("https://aqvo.limsa.uz/api/auth/refresh", {
         refreshToken,
       });
+      
       const newToken = response.data?.data?.access_token;
 
       if (newToken) {
@@ -67,20 +68,26 @@ const Employees = () => {
 
   const deleteEmployee = async (id) => {
     const isConfirmed = window.confirm("Are you sure you want to delete this employee?");
-    if (!isConfirmed) return; // If the user doesn't confirm, stop the deletion
-
+    if (!isConfirmed) return;
+  
     try {
-      const token = localStorage.getItem("token");
+      let token = localStorage.getItem("token");
       await axios.delete(`https://aqvo.limsa.uz/api/users/${id}`, {
         headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
       });
       toast.success("Employee deleted successfully!");
       fetchEmployees(token);
     } catch (error) {
-      toast.error("Error deleting employee!");
-      console.error("Error deleting employee:", error);
+      if (error.response?.status === 401) {
+        const newToken = await refreshAuthToken();
+        if (newToken) deleteEmployee(id); // Retry with new token
+      } else {
+        toast.error("Error deleting employee!");
+        console.error("Error deleting employee:", error);
+      }
     }
   };
+  
 
   return (
     <div className="crm-panel">
